@@ -20,7 +20,7 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 import AutoSwagger from 'adonis-autoswagger'
-import swagger from 'Config/swagger'
+import * as swagger from 'Config/swagger'
 
 Route.group(() => {
   Route.group(() => {
