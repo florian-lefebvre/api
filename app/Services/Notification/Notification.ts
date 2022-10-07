@@ -26,7 +26,7 @@ class NotificationService {
   /**
    * The {@link this.novu} API key.
    */
-  private apiKey = Env.get('NOVU_API_KEY')
+  private apiKey = Env.get('NOVU_API_KEY', '')
 
   /**
    * The axios client to interact with the {@link novu} API that is not accesible
@@ -54,7 +54,13 @@ class NotificationService {
 
     this.booted = true
     this.novu = new Novu(this.apiKey)
-    await setupNovu(this.axiosInstance)
+    if (Env.get('NODE_ENV') === 'test') {
+      Logger.warn('Running tests. Skipping Novu setup...')
+    } else {
+      try {
+        await setupNovu(this.axiosInstance)
+      } catch {}
+    }
     this.subscribers = new Subscribers(this.novu)
     Logger.info('Notification service booted.')
   }

@@ -7,6 +7,8 @@ import {
   notificationTemplates,
 } from 'Config/notifications'
 
+const novuPersonalToken = Env.get('NOVU_PERSONAL_TOKEN', '')
+
 /**
  * Setup the integrations that are used by the application. Creates, updates and deletes any
  * if necessary.
@@ -92,7 +94,7 @@ async function _setupNotificationTemplates(axiosInstance: AxiosInstance) {
   for (const template of currentTemplates) {
     await axiosInstance.delete(`/notification-templates/${template._id}`, {
       headers: {
-        Authorization: `Bearer ${Env.get('NOVU_PERSONAL_TOKEN')}`,
+        Authorization: `Bearer ${novuPersonalToken}`,
       },
     })
   }
@@ -116,7 +118,7 @@ async function _setupNotificationTemplates(axiosInstance: AxiosInstance) {
       { ...template, notificationGroupId },
       {
         headers: {
-          Authorization: `Bearer ${Env.get('NOVU_PERSONAL_TOKEN')}`,
+          Authorization: `Bearer ${novuPersonalToken}`,
         },
       }
     )
